@@ -49,7 +49,7 @@ function send(){
  console.log("Data sent");
 }
 function load(){
- $.get("localhost:8888", function(DATA){
+ $.get("DATA.json", function(DATA){
  
  JSONdata = DATA;
  output.value= JSON.stringify(JSONdata);

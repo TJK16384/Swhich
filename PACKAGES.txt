@@ -1,3 +1,5 @@
+> npm install PackageName --save
+
 httpdispatcher
 johnny-five
 jquery

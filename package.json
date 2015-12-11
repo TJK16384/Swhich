@@ -1,0 +1,27 @@
+{
+  "name": "swhich",
+  "version": "1.0.0",
+  "main": "blinky.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "johnny-five": "^0.9.14",
+    "jquery": "^2.1.4",
+    "jsonfile": "^2.2.3",
+    "moment": "^2.10.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PHR16384/Swhich.git"
+  },
+  "author": "TJK, SJ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PHR16384/Swhich/issues"
+  },
+  "homepage": "https://github.com/PHR16384/Swhich#readme",
+  "description": ""
+}
