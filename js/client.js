@@ -14,6 +14,10 @@ function update(){
 	case "normal":
 	
 	 if (JSONdata[ID.value]){ //If there is an object for the current ID
+	/* for (var x in JSONdata[ID.value]["Schedule"]){
+		 if ()
+	 }*/
+	 
 	  JSONdata[ID.value]["Schedule"].push({state:"ON", datetime: clock.value});
 			JSONdata[ID.value]["scheduleActive"] = true;}
 			
@@ -38,13 +42,14 @@ function update(){
 	 else{ //If there is no object, create it
 		JSONdata.push({"id":ID.value, "scheduleActive": false, "Schedule": [{state:"OFF", datetime: "00:00"}]});}
 		break;
+
 	}
 	output.value= JSON.stringify(JSONdata);
 	
 }
 function send(){
 	JSONdata = JSON.parse(output.value);
- $.post("localhost:8888", JSONdata)
+ $.post("./update", JSONdata)
 
  console.log("Data sent");
 }
