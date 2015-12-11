@@ -1,17 +1,4 @@
 var JSONdata = [];
-fs = require('fs');
-var options = {
-  port: 80,
-  method: 'POST'
-};
-
-var settings = {
- data: JSON.stringify(JSONdata),
- url: "./DATA.json",
- type: "POST",
- contentType: "application/json"
- //dataType:"jsonp"
-};
 
 /*
 var JSONdata = [{
@@ -20,34 +7,53 @@ var JSONdata = [{
 	"Schedule": [
            {"state": "ON", "datetime": "08:00:00"}]
 	},{},{},{}]
-*/
+*/ //JSON file format for reference
 
 function update(){
 	switch(mode.value){ 
 	case "normal":
-		JSONdata.push({"id":ID.value, "scheduleActive": "ON", "Schedule": [{state:"ON", datetime: clock.value}]});
+	
+	 if (JSONdata[ID.value]){ //If there is an object for the current ID
+	  JSONdata[ID.value]["Schedule"].push({state:"ON", datetime: clock.value});
+			JSONdata[ID.value]["scheduleActive"] = true;}
+			
+	 else{ //If there is no object, create it
+	  JSONdata.push({"id":ID.value, "scheduleActive": true, "Schedule": [{state:"ON", datetime: clock.value}]});}
 		break;
+		
 	case "on":
-		JSONdata.push({"id":ID.value, "scheduleActive": "OFF", "Schedule": [{state:"ON", datetime: "00:00"}]});
+	
+	 if (JSONdata[ID.value]){ //If there is an object for the current ID
+	  JSONdata[ID.value]["Schedule"].push({state:"ON", datetime: clock.value});
+		 JSONdata[ID.value]["scheduleActive"] = false;}
+	 else{ //If there is no object, create it
+		JSONdata.push({"id":ID.value, "scheduleActive": false, "Schedule": [{state:"ON", datetime: "00:00"}]});}
 		break;
+		
 	case "off":
-		JSONdata.push({"id":ID.value, "scheduleActive": "OFF", "Schedule": [{state:"OFF", datetime: "00:00"}]});
+	
+	if (JSONdata[ID.value]){ //If there is an object for the current ID
+	  JSONdata[ID.value]["Schedule"].push({state:"OFF", datetime: clock.value});
+		 JSONdata[ID.value]["scheduleActive"] = false;}
+	 else{ //If there is no object, create it
+		JSONdata.push({"id":ID.value, "scheduleActive": false, "Schedule": [{state:"OFF", datetime: "00:00"}]});}
 		break;
 	}
 	output.value= JSON.stringify(JSONdata);
+	
 }
 function send(){
- //settings.data = output.value;
- //$.ajax(settings);
-fs.writeFile("./data.json", JSONdata);
+	JSONdata = JSON.parse(output.value);
+ $.post("localhost:8888", JSONdata)
 
  console.log("Data sent");
 }
 function load(){
- $.get("./data.json", function(DATA){
+ $.get("localhost:8888", function(DATA){
  
  JSONdata = DATA;
  output.value= JSON.stringify(JSONdata);
  });
  console.log("Data Recieved");
 }
+$(document).ready(function(){load();}); //Loads the file from the server when the page loads
