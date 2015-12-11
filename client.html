@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>button demo</title>
+  <style>
+    #title {
+     float:top;
+    }
+    #labels {
+     float:left;
+     width:100px;
+	 line-height:30px;
+    }
+    #entry {
+     float:left;
+     width:100px;
+	 line-height:30px;
+    }
+	#output {
+	 float:left;
+	 width: 50em;
+	 height: 15em;
+	}
+  </style>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="client.js"></script>
+</head>
+<body>
+ 
+<form>
+
+<div id= "title">
+<h1> Relay Controller</h1> </div>
+
+<div id = "labels" > <p>
+ Relay ID: <br>
+ Mode: <br>
+ Time: <br>
+ &nbsp <br>
+ &nbsp <br>
+ &nbsp
+ <textarea id="output"></textarea>
+</p>
+
+ </div>
+
+<div id ="entry"> <p>
+<select id="ID">
+  <option value="0">1</option>
+  <option value="1">2</option>
+  <option value="2">3</option>
+  <option value="3">4</option>
+</select>
+<select id="mode">
+  <option value="normal">Normal Scheduling</option>
+  <option value="on">Force On</option>
+  <option value="off">Force Off</option>
+</select>
+<input type="time" name="usr_time" id="clock" value="00:00">
+<!input type="date" name="usr_time" id="dclock">
+
+
+<input id="buttonUpdate" onclick="update()" type="button" value="Update Schedule" />
+<input id="buttonSend" onclick="send()" type="button" value="Send Schedule" />
+<input id="buttonLoad" onclick="load()" type="button" value="Load Schedule From Server" />
+</p> </div>
+
+</body>
+</html>
