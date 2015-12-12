@@ -51,8 +51,7 @@ function send(){
 	JSONdata = JSON.parse(output.value);
 	$.post("./update", JSONdata, function() {
 		console.log("Data sent");
-		);
-	}
+	});
 }
 function load(){
 	$.get("DATA.json", function(DATA){
