@@ -48,17 +48,38 @@ function update(){
 	
 }
 function send(){
-	JSONdata = JSON.parse(output.value);
-	$.post("./update", JSONdata, function() {
-		console.log("Data sent");
-	});
+	JSONdata = output.value;
+    $.ajax({
+        url: "./update",
+        type: "POST",
+        contentType: "application/json",
+        data: JSONdata,
+        dataType: "json",
+        success: function(data){
+            // On success, do this:
+            console.log("Data sent");
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            // On error, do this
+            $.mobile.loading('hide');
+            if (xhr.status == 200) {
+                alert(ajaxOptions);
+            }
+            else {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        }
+    });
 }
 function load(){
 	$.get("DATA.json", function(DATA){
 		JSONdata = DATA;
-		output.value= JSON.stringify(JSONdata);
+		output.value = JSON.stringify(JSONdata);
 		console.log("Data Recieved");
 	});
 }
 
-$(document).ready(function(){load();}); //Loads the file from the server when the page loads
+$(document).ready(function(){   // When the HTML data is fully loaded:
+    load();     // 1) Grab the JSON data from the server 
+});

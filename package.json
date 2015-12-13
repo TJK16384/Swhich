@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "blinky.js",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "johnny-five": "^0.9.14",
     "jquery": "^2.1.4",
