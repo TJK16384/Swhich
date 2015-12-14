@@ -4,6 +4,7 @@ var JSONdata = [];
 var JSONdata = [{
 	"id":0,
 	"scheduleActive": true,
+	"setState": false,  // OFF
 	"Schedule": [
 		{"state": "ON", "datetime": "08:00:00"}]
 	},{},{},{}]
@@ -11,38 +12,16 @@ var JSONdata = [{
 
 function update(){
 	switch(mode.value){ 
+	
 	case "normal":
-		
-		if (JSONdata[ID.value]){ //If there is an object for the current ID
-			/* for (var x in JSONdata[ID.value]["Schedule"]){
-		if ()
-	}*/
-			
-			JSONdata[ID.value]["Schedule"].push({state:"ON", datetime: clock.value});
-			JSONdata[ID.value]["scheduleActive"] = true;}
-		
-		else{ //If there is no object, create it
-			JSONdata.push({"id":ID.value, "scheduleActive": true, "Schedule": [{state:"ON", datetime: clock.value}]});}
+		checkTime("ON", true);
 		break;
-		
 	case "on":
-		
-		if (JSONdata[ID.value]){ //If there is an object for the current ID
-			JSONdata[ID.value]["Schedule"].push({state:"ON", datetime: clock.value});
-			JSONdata[ID.value]["scheduleActive"] = false;}
-		else{ //If there is no object, create it
-			JSONdata.push({"id":ID.value, "scheduleActive": false, "Schedule": [{state:"ON", datetime: "00:00"}]});}
+		checkTime("ON", false);
 		break;
-		
 	case "off":
-		
-		if (JSONdata[ID.value]){ //If there is an object for the current ID
-			JSONdata[ID.value]["Schedule"].push({state:"OFF", datetime: clock.value});
-			JSONdata[ID.value]["scheduleActive"] = false;}
-		else{ //If there is no object, create it
-			JSONdata.push({"id":ID.value, "scheduleActive": false, "Schedule": [{state:"OFF", datetime: "00:00"}]});}
+		checkTime("OFF", false);
 		break;
-
 	}
 	output.value= JSON.stringify(JSONdata);
 	
@@ -79,6 +58,36 @@ function load(){
 		console.log("Data Recieved");
 	});
 }
+function checkTime(stateVal, schedVal){
+	//checks if the currently chosen time is already on the schedule and updates the JSONdata accordingly
+	var timeFound = false;
+	var setVal = false;
+	if (stateVal =="ON" && schedVal == false)
+		setVal = true;
+
+	if (JSONdata[ID.value]){ //If there is an object for the current ID
+		for (x in JSONdata[ID.value]["Schedule"]){
+			if (JSONdata[ID.value]["Schedule"][x]["datetime"] == clock.value){ 
+			//If the current clock value is equal to any time already in the schedule
+			//Update the values of the clock instead of creating a new one
+				JSONdata[ID.value]["setState"] = setVal;
+				JSONdata[ID.value]["Schedule"][x]["state"] = stateVal;
+				JSONdata[ID.value]["scheduleActive"] = schedVal;
+				timeFound = true;
+			}
+		}
+		//Create a new entry for the time if not found in the schedule
+		if (!timeFound){ 
+			JSONdata[ID.value]["Schedule"].push({state: stateVal, datetime: clock.value});
+			JSONdata[ID.value]["setState"] = setVal;
+			JSONdata[ID.value]["scheduleActive"] = schedVal;
+		}
+	}
+	else{ //If there is no object, create it
+		JSONdata.push({"id":ID.value, "scheduleActive": schedVal, "setState": setVal, "Schedule": [{state:stateVal, datetime: clock.value}]});
+	}
+}
+
 
 $(document).ready(function(){   // When the HTML data is fully loaded:
     load();     // 1) Grab the JSON data from the server 
