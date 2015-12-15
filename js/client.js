@@ -14,7 +14,7 @@ function update(){
 	switch(mode.value){ 
 	
 	case "normal":
-		checkTime("ON", true);
+		checkTime(onOff.value, true);
 		break;
 	case "on":
 		checkTime("ON", false);
@@ -86,6 +86,15 @@ function checkTime(stateVal, schedVal){
 	else{ //If there is no object, create it
 		JSONdata.push({"id":ID.value, "scheduleActive": schedVal, "setState": setVal, "Schedule": [{state:stateVal, datetime: clock.value}]});
 	}
+}
+
+function removeSched(){
+	for (x in JSONdata[ID.value]["Schedule"]){
+		if (JSONdata[ID.value]["Schedule"][x]["datetime"] == clock.value){ 
+			JSONdata[ID.value]["Schedule"].splice(x,1);
+		}
+	}
+	output.value= JSON.stringify(JSONdata);
 }
 
 

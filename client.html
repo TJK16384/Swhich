@@ -36,7 +36,9 @@
 <div id = "labels" > <p>
  Relay ID: <br>
  Mode: <br>
+ On/Off: <br>
  Time: <br>
+ &nbsp <br>
  &nbsp <br>
  &nbsp <br>
  &nbsp
@@ -57,11 +59,14 @@
   <option value="on">Force On</option>
   <option value="off">Force Off</option>
 </select>
+<select id="onOff">
+  <option value="ON">On</option>
+  <option value="OFF">Off</option>
+</select>
 <input type="time" name="usr_time" id="clock" step="1" value="00:00:00">
-<!input type="date" name="usr_time" id="dclock">
-
 
 <input id="buttonUpdate" onclick="update()" type="button" value="Update Schedule" />
+<input id="buttonDelete" onclick="removeSched()" type="button" value="Delete Current Selection" />
 <input id="buttonSend" onclick="send()" type="button" value="Send Schedule" />
 <input id="buttonLoad" onclick="load()" type="button" value="Load Schedule From Server" />
 </p> </div>
