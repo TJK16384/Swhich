@@ -1,4 +1,5 @@
 var j5 = require("johnny-five");
+var $ = require("jquery");
 
 var Teensy = new j5.Board();
 
@@ -13,13 +14,22 @@ var HIGH = 1;
 
 
 Teensy.on("ready", function(){
-    var rgb = new j5.Led.RGB({
-        pins: [RED,GREEN,BLUE],
-        isAnode: false
+    var V, x=0, delay=500;
+    var LEDs = [ new j5.Led(RED), new j5.Led(GREEN), new j5.Led(BLUE), new j5.Led(13) ];
+    
+    // indexing wasn't working properly; use for each loop instead:
+    LEDs.forEach(function(item){
+        x += delay;
+        // do this when # ms has elapsed:
+        Teensy.wait(x, function(){
+            item.on();
+        });
+        Teensy.wait(x+delay, function(){
+            item.off();
+        });
     });
     
-    var V, x=0;
-    
+    /*
     this.loop(25, function() {
         V = 100 * ( 0.5 - 0.5 * Math.cos(x * Math.PI/100) );
         
@@ -28,8 +38,8 @@ Teensy.on("ready", function(){
             x=0;
         }
         
-        rgb.intensity(V);
+        RGB.intensity(V);
         console.log(V);
     });
-    
+    */
 });

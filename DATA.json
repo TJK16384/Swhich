@@ -1,27 +1,86 @@
-[{
-	"id": 0,
-	"scheduleActive": true,
-	"Schedule": [{
-		"state": "ON",
-		"datetime": "08:00:00"
-	}, {
-		"state": "OFF",
-		"datetime": "22:00:00"
-	}]
-}, {
-	"id": 1,
-	"scheduleActive": false,
-	"Schedule": [{
-		"state": "ON",
-		"datetime": "04:00:00"
-	}, {
-		"state": "OFF",
-		"datetime": "06:00:00"
-	}, {
-		"state": "ON",
-		"datetime": "08:00:00"
-	}, {
-		"state": "OFF",
-		"datetime": "12:00:00"
-	}]
-}]
+[
+  {
+    "id": 0,
+    "scheduleActive": true,
+    "setState": true,
+    "Schedule": [
+      {
+        "state": "ON",
+        "datetime": "08:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "12:00:00"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "scheduleActive": false,
+    "setState": true,
+    "Schedule": [
+      {
+        "state": "ON",
+        "datetime": "04:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "06:00:00"
+      },
+      {
+        "state": "ON",
+        "datetime": "08:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "12:00:00"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "scheduleActive": true,
+    "setState": true,
+    "Schedule": [
+      {
+        "state": "ON",
+        "datetime": "04:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "06:00:00"
+      },
+      {
+        "state": "ON",
+        "datetime": "08:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "12:00:00"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "scheduleActive": true,
+    "setState": true,
+    "Schedule": [
+      {
+        "state": "ON",
+        "datetime": "04:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "14:00:00"
+      },
+      {
+        "state": "ON",
+        "datetime": "16:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "20:00:00"
+      }
+    ]
+  }
+]

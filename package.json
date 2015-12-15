@@ -7,8 +7,8 @@
     "express": "^4.13.3",
     "johnny-five": "^0.9.14",
     "jquery": "^2.1.4",
-    "jsonfile": "^2.2.3",
-    "moment": "^2.10.6"
+    "moment": "^2.10.6",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -18,11 +18,11 @@
     "type": "git",
     "url": "git+https://github.com/PHR16384/Swhich.git"
   },
-  "author": "TJK, SJ",
+  "author": "SJ, TJK",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PHR16384/Swhich/issues"
   },
   "homepage": "https://github.com/PHR16384/Swhich#readme",
-  "description": ""
+  "description": "Scheduled control over Arduino-compatible boards"
 }
