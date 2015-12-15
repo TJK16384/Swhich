@@ -6,11 +6,11 @@
     "Schedule": [
       {
         "state": "ON",
-        "datetime": "08:00:00"
+        "datetime": "12:00:00"
       },
       {
         "state": "OFF",
-        "datetime": "12:00:00"
+        "datetime": "20:00:00"
       }
     ]
   },
@@ -20,20 +20,20 @@
     "setState": true,
     "Schedule": [
       {
-        "state": "ON",
-        "datetime": "04:00:00"
-      },
-      {
-        "state": "OFF",
-        "datetime": "06:00:00"
-      },
-      {
-        "state": "ON",
-        "datetime": "08:00:00"
-      },
-      {
         "state": "OFF",
         "datetime": "12:00:00"
+      },
+      {
+        "state": "ON",
+        "datetime": "15:00:00"
+      },
+      {
+        "state": "OFF",
+        "datetime": "17:00:00"
+      },
+      {
+        "state": "ON",
+        "datetime": "21:00:00"
       }
     ]
   },

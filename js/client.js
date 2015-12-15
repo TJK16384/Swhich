@@ -23,7 +23,7 @@ function update(){
 		checkTime("OFF", false);
 		break;
 	}
-	output.value= JSON.stringify(JSONdata);
+	output.value = JSON.stringify(JSONdata, null, "  ");
 	
 }
 function send(){
@@ -54,7 +54,7 @@ function send(){
 function load(){
 	$.get("DATA.json", function(DATA){
 		JSONdata = DATA;
-		output.value = JSON.stringify(JSONdata);
+		output.value = JSON.stringify(JSONdata, null, "  ");
 		console.log("Data Recieved");
 	});
 }
@@ -94,7 +94,7 @@ function removeSched(){
 			JSONdata[ID.value]["Schedule"].splice(x,1);
 		}
 	}
-	output.value= JSON.stringify(JSONdata);
+	output.value = JSON.stringify(JSONdata, null, "  ");
 }
 
 

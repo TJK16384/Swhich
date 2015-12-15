@@ -98,12 +98,13 @@ Teensy.on("ready", function(){
         console.log(lineBreak);
         
         if( checkData() ){  // if the incoming JSON is valid...
-            JSONdata = JSONdataNEW;
-            // ... sort each outlet's
-            JSONdata.forEach(function(item){
-                _.sortBy(item.Schedule, "datetime");
+            // ... sort each outlet's schedule by time
+            JSONdataNEW.forEach(function(item){
+                item.Schedule = _.sortBy(item.Schedule, "datetime");
+                //console.log(item.Schedule);
             });
             // ...then update the JSON file
+            JSONdata = JSONdataNEW;
             fs.writeFile( "."+JSONurl, JSON.stringify(JSONdata, null, "  "), function(err){
                 if(err){
                     throw err;
@@ -140,7 +141,7 @@ Teensy.on("ready", function(){
     // Synchronously update pin states:
     this.loop(1000, function() {
         //console.log( moment().format('MMMM Do YYYY, h:mm:ss A') );
-        console.log( moment("08:00:00", "HH:mm:ss").format('MMMM Do YYYY, h:mm:ss A') );
+        //console.log( moment("08:00:00", "HH:mm:ss").format('MMMM Do YYYY, h:mm:ss A') );
     });
 });
 
