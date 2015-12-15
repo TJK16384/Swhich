@@ -2,7 +2,7 @@
  * Hardware-extensible via relays for control over AC power lines
  * 
  * Steven Jefferies & Tom Kruk
- * Last modified:  2015-12-14
+ * Last modified:  2015-12-15
 */
 
 var fs = require("fs");
@@ -17,10 +17,9 @@ var bodyParser = require("body-parser");
 var express = require("express");
 var j5 = require("johnny-five");    // JavaScript Robotics framework (incl. Firmata compat.)
 var $ = require("jquery");
-//var jsonfile = require("jsonfile");
 var moment = require("moment");     // date-and-time library
 //var momentTS = require("moment-timezone");
-var _ = require("underscore");  //
+var _ = require("underscore");      // misc. useful functions, like sorting
 
 var Teensy = new j5.Board();
 
@@ -28,7 +27,7 @@ const LOW = 0;
 const HIGH = 1;
 
 // pin #s
-const OUTLET = [23,22,21,13];
+const OUTLETS = [23,22,21,13];
 
 const lineBreak = "\n========================================\n";
 
@@ -38,12 +37,17 @@ const lineBreak = "\n========================================\n";
 */
 Teensy.on("ready", function(){
     var j5Pins = new Array();
-    var delay=250, x=0;
+    var delay = 250;
+    var x=0, y=0;
     
     // set up output pins:
-    OUTLET.forEach(function(item){
+    OUTLETS.forEach(function(item){
         j5Pins.push( new j5.Pin(item) );
     });
+    j5Pins.forEach(function(pin){
+        pin.low();  // turn everything off at start
+    });
+    /*
     // test pattern on output pins:
     j5Pins.forEach(function(pin){
         x += delay;
@@ -55,6 +59,7 @@ Teensy.on("ready", function(){
             pin.low();
         });
     });
+    */
     
     console.log("Teensy is ready; Firmata active.");
     
@@ -69,7 +74,7 @@ Teensy.on("ready", function(){
         console.log(lineBreak);
     });
     
-    // serve the directories with files required by the client
+    // expose the subdirectories with files required by the client
     var arDirs = ["css", "fonts", "js"];
     for(x=0; x<arDirs.length; x++){
         App.use("/"+arDirs[x], express.static(arDirs[x]));
@@ -98,7 +103,7 @@ Teensy.on("ready", function(){
         console.log(lineBreak);
         
         if( checkData() ){  // if the incoming JSON is valid...
-            // ... sort each outlet's schedule by time
+            // ... sort each outlet's schedule by datetime
             JSONdataNEW.forEach(function(item){
                 item.Schedule = _.sortBy(item.Schedule, "datetime");
                 //console.log(item.Schedule);
@@ -134,14 +139,22 @@ Teensy.on("ready", function(){
         return true;
     }
     
-    function setOutlets(){
-        
+    function updateOutlets(){
+        x=0;
+        j5Pins.forEach(function(outlet){
+            //console.log( JSONdata[x].scheduleActive );
+            if( !JSONdata[x].scheduleActive ){   // outlet override
+                JSONdata[x].setState ? outlet.high() : outlet.low();
+            }
+            x++;
+        });
     }
     
     // Synchronously update pin states:
-    this.loop(1000, function() {
+    this.loop(500, function() {
         //console.log( moment().format('MMMM Do YYYY, h:mm:ss A') );
         //console.log( moment("08:00:00", "HH:mm:ss").format('MMMM Do YYYY, h:mm:ss A') );
+        updateOutlets();
     });
 });
 

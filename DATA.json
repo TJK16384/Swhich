@@ -2,7 +2,7 @@
   {
     "id": 0,
     "scheduleActive": true,
-    "setState": true,
+    "setState": false,
     "Schedule": [
       {
         "state": "ON",
@@ -17,7 +17,7 @@
   {
     "id": 1,
     "scheduleActive": false,
-    "setState": true,
+    "setState": false,
     "Schedule": [
       {
         "state": "OFF",
@@ -39,7 +39,7 @@
   },
   {
     "id": 2,
-    "scheduleActive": true,
+    "scheduleActive": false,
     "setState": true,
     "Schedule": [
       {
@@ -62,7 +62,7 @@
   },
   {
     "id": 3,
-    "scheduleActive": true,
+    "scheduleActive": false,
     "setState": true,
     "Schedule": [
       {
