@@ -10,13 +10,13 @@
       },
       {
         "state": "OFF",
-        "datetime": "20:00:00"
+        "datetime": "18:00:00"
       }
     ]
   },
   {
     "id": 1,
-    "scheduleActive": false,
+    "scheduleActive": true,
     "setState": false,
     "Schedule": [
       {
@@ -25,11 +25,11 @@
       },
       {
         "state": "ON",
-        "datetime": "15:00:00"
+        "datetime": "17:00:00"
       },
       {
         "state": "OFF",
-        "datetime": "17:00:00"
+        "datetime": "18:00:00"
       },
       {
         "state": "ON",
@@ -39,8 +39,8 @@
   },
   {
     "id": 2,
-    "scheduleActive": false,
-    "setState": true,
+    "scheduleActive": true,
+    "setState": false,
     "Schedule": [
       {
         "state": "ON",
@@ -62,8 +62,8 @@
   },
   {
     "id": 3,
-    "scheduleActive": false,
-    "setState": true,
+    "scheduleActive": true,
+    "setState": false,
     "Schedule": [
       {
         "state": "ON",

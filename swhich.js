@@ -23,13 +23,12 @@ var _ = require("underscore");      // misc. useful functions, like sorting
 
 var Teensy = new j5.Board();
 
-const LOW = 0;
-const HIGH = 1;
-
 // pin #s
-const OUTLETS = [23,22,21,13];
+const PINS = [23,22,21,13];
 
-const lineBreak = "\n========================================\n";
+const DATETIME_FORMAT = "MMMM Do YYYY, h:mm:ss A";
+
+const SEPARATOR = "\n========================================\n";
 
 /*
     Wait for the Teensy (w/ StandardFirmata uploaded) to be active;
@@ -41,7 +40,7 @@ Teensy.on("ready", function(){
     var x=0, y=0;
     
     // set up output pins:
-    OUTLETS.forEach(function(item){
+    PINS.forEach(function(item){
         j5Pins.push( new j5.Pin(item) );
     });
     j5Pins.forEach(function(pin){
@@ -61,6 +60,7 @@ Teensy.on("ready", function(){
     });
     */
     
+    console.log( moment().format(DATETIME_FORMAT) );
     console.log("Teensy is ready; Firmata active.");
     
     var JSONurl = "/DATA.json";
@@ -69,9 +69,10 @@ Teensy.on("ready", function(){
     
     var App = express();    // create an Express "Web Application"
     var server = App.listen(PORT, function(){
+        console.log( moment().format(DATETIME_FORMAT) );
         console.log("Server up.  (localhost:%s)", server.address().port);
         //console.log( JSONdata );
-        console.log(lineBreak);
+        console.log(SEPARATOR);
     });
     
     // expose the subdirectories with files required by the client
@@ -90,20 +91,23 @@ Teensy.on("ready", function(){
     // Serve the JSON file when its URL is requested
     App.get(JSONurl, function(req, res){
         res.json(JSONdata);
+        console.log( moment().format(DATETIME_FORMAT) );
         console.log("JSON data sent to client.\n");
         console.log( JSONdata );
-        console.log(lineBreak);
+        console.log(SEPARATOR);
     });
     
     // Receive updated JSON data from the client
     App.post("/update", function(req, res){
+        console.log( moment().format(DATETIME_FORMAT) );
         console.log("Received updated JSON data:\n");
+        
         JSONdataNEW = req.body;    // no need for JSON.parse(); already an object
         console.log( JSONdataNEW );
-        console.log(lineBreak);
+        console.log(SEPARATOR);
         
         if( checkData() ){  // if the incoming JSON is valid...
-            // ... sort each outlet's schedule by datetime
+            // ... sort each pin's schedule by datetime
             JSONdataNEW.forEach(function(item){
                 item.Schedule = _.sortBy(item.Schedule, "datetime");
                 //console.log(item.Schedule);
@@ -114,8 +118,9 @@ Teensy.on("ready", function(){
                 if(err){
                     throw err;
                 }
+                console.log( moment().format(DATETIME_FORMAT) );
                 console.log(JSONurl+" updated.");
-                console.log(lineBreak);
+                console.log(SEPARATOR);
             } );
             // ...and set the new pin states
         }
@@ -126,35 +131,65 @@ Teensy.on("ready", function(){
         //console.log(JSONdata.length);
         //console.log(JSONdataNEW.length);
         if( JSONdataNEW.length != JSONdata.length ){
-            console.log("New data has wrong # of outlets.  Ignoring.");
-            console.log(lineBreak);
+            console.log("New data has wrong # of pins.  Ignoring.");
+            console.log(SEPARATOR);
             return false;
         }
         //console.log( _.isEqual(JSONdataNEW,JSONdata) );
         if( _.isEqual(JSONdataNEW,JSONdata) ){  // Underscore's pre-built deep comparator
             console.log("JSON data hasn't changed.  Ignoring.");
-            console.log(lineBreak);
+            console.log(SEPARATOR);
             return false;
         }
         return true;
     }
     
-    function updateOutlets(){
+    function updatePins(){
         x=0;
-        j5Pins.forEach(function(outlet){
+        j5Pins.forEach(function(pin){
             //console.log( JSONdata[x].scheduleActive );
-            if( !JSONdata[x].scheduleActive ){   // outlet override
-                JSONdata[x].setState ? outlet.high() : outlet.low();
+            
+            // Ignore schedule and turn on/off immediately
+            if( !JSONdata[x].scheduleActive ){
+                JSONdata[x].setState ? pin.high() : pin.low();    // true=ON, false=OFF
+                console.log( "Pin " + x + ":\t" + (JSONdata[x].setState ? "ON" : "OFF") + " (override)" );
             }
+            // if not, check schedule if pin should be on/off right now
+            else {
+                var This, info;
+                // check each schedule item:
+                JSONdata[x].Schedule.forEach(function(item, index){
+                    This = moment(item.datetime, "HH:mm:ss");
+                    //console.log( index + ":\t" + This.format(DATETIME_FORMAT) + "\t" + moment().isAfter(This) );
+                    if( moment().isAfter(This) ){   // is now later than this schedule item?
+                        y = index;  // store the last index that's before current time
+                    }
+                });
+                
+                console.log( "Pin " + x + ":\t" + JSONdata[x].Schedule[y].state );
+                
+                // pointlessly resetting to ON causes a blip; check if already on first
+                pin.query(function(i){
+                    info = i.state;
+                });
+                if( JSONdata[x].Schedule[y].state == "ON" && !info ){
+                    pin.high();
+                }
+                else {  // interpret all invalid strings as OFF
+                    pin.low();
+                }
+            }
+            
             x++;
         });
     }
     
     // Synchronously update pin states:
-    this.loop(500, function() {
-        //console.log( moment().format('MMMM Do YYYY, h:mm:ss A') );
-        //console.log( moment("08:00:00", "HH:mm:ss").format('MMMM Do YYYY, h:mm:ss A') );
-        updateOutlets();
+    this.loop(500, function(){
+        console.log( moment().format(DATETIME_FORMAT) );
+        //console.log( moment("08:00:00", "HH:mm:ss").format(DATETIME_FORMAT) );
+        updatePins();
+        console.log("");
     });
 });
 
