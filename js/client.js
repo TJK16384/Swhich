@@ -35,7 +35,7 @@ function addLine(myID, myclock, myonOff){
         var box_html = $('<p id="scheduleBox' + numSchedules + '" relay="' + myID + '" theclock="' + clock.value +'"><label for="box' + numSchedules + '" style="float:left;">Schedule <span class="box-number">' + numSchedules + '</span></label><br><select value="" id="onSched' + numSchedules + '" style="float:left;clear: left;" ><option value="ON">On</option><option value="OFF">Off</option></select><br><input type="time" id="clock' + numSchedules + '" step="1"  style="float:left; clear:left;" value="00:00:01"/>&nbsp <br><input onclick="updateLine(' + numSchedules + ',clock' + numSchedules + '.value, onSched' + numSchedules + '.value)" type="button" class="btn btn-sucess" value="Update" style="float:left; clear: left;"/><input onclick="removeLine(' + numSchedules + ')" type="button" id="removeButton" class="btn btn-danger" value="Remove" style="float:left;"></input></p>');
         box_html.hide();
 		//Adds the above element to the page
-        $('#Relay' + ID.value + '').append(box_html);   
+        $('#Relay' + myID + '').append(box_html);   
         box_html.fadeIn('slow');
 		//Updates the inputs to be the currently set values
 		$('#clock' + numSchedules + '').val(myclock);
