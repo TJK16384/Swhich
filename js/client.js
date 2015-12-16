@@ -66,8 +66,11 @@ function updateLine(lineNum, myclock, myonOff){
 				JSONdata[ScheduleList[lineNum].id]["Schedule"][x]["state"] = myonOff;
 			}
 	}
+	
 	ScheduleList[lineNum].datetime = myclock;
 	ScheduleList[lineNum].state = myonOff;
+	output.value = JSON.stringify(JSONdata, null, "  ");
+	//JSONdata[ScheduleList[lineNum].id] = 
 }
 
 function send(){

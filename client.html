@@ -20,7 +20,7 @@
 	 line-height:30px;
     }
 	#output {
-	 float:left;
+	 float:right;
 	 width: 50em;
 	 height: 15em;
 	}
@@ -31,7 +31,9 @@
   </style>
   <script src="./js/jquery.min.js"></script>
   <script src="./js/client.js"></script>
+  <script type="text/javascript" src="js/bootstrap-timepicker.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
+  <link type="text/css" href="css/bootstrap-timepicker.min.css" />
   <link href="./css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -51,7 +53,6 @@
  &nbsp <br>
  &nbsp <br>
  &nbsp
- <textarea hidden id="output"></textarea>
 </p>
  </div>
  
@@ -81,15 +82,26 @@
 <input id="buttonLoad" class="btn btn-primary" onclick="load()" type="button" value="Load Schedule From Server" />
  </div>
 </p> </div>
+ <textarea id="output"></textarea>
 <div id="schedule">
 <div>
- <div id="Relay0" style="float:left; width:200px"><b>Relay 1<br></div>
- <div id="Relay1" style="float:left; width:200px"><b>Relay 2<br></div>
- <div  id="Relay2" style="float:left;width:200px"><b>Relay 3<br></div>
- <div id="Relay3" style="float:left;width:200px"><b>Relay 4<br></div>
+ <div id="Relay0" style="float:left; width:200px"><b>Relay 1<br> &nbsp <br>
+	  <input type="checkbox" id="ChNormRelay0" value=true> Normal Scheduling<br>
+	  <input type="checkbox" id="ChForceRelay0" value=true> Force On<br></div>
+ <div id="Relay1" style="float:left; width:200px"><b>Relay 2<br> &nbsp <br>
+	  <input type="checkbox" id="ChNormRelay2" value=true> Normal Scheduling<br>
+	  <input type="checkbox" id="ChForceRelay2" value=true> Force On<br></div>
+ <div  id="Relay2" style="float:left;width:200px"><b>Relay 3<br> &nbsp <br>
+	  <input type="checkbox" id="ChNormRelay2" value=true> Normal Scheduling<br>
+	  <input type="checkbox" id="ChForceRelay2" value=true> Force On<br></div>
+ <div id="Relay3" style="float:left;width:200px"><b>Relay 4<br> &nbsp <br>
+	  <input type="checkbox" id="ChNormRelay3" value=true> Normal Scheduling<br>
+	  <input type="checkbox" id="ChForceRelay3" value=true> Force On<br></div>
   </div>
   </div>
 </div>
+<!input id="timepicker1" type="text" class="form-control input-small">
+<script>$('#timepicker1').timepicker();</script>
 
 </body>
 </html>
