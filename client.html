@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>button demo</title>
   <style>
     #title {
@@ -9,12 +11,12 @@
     }
     #labels {
      float:left;
-     width:100px;
+	 width:150px;
 	 line-height:30px;
     }
     #entry {
      float:left;
-     width:100px;
+     width:150px;
 	 line-height:30px;
     }
 	#output {
@@ -22,17 +24,23 @@
 	 width: 50em;
 	 height: 15em;
 	}
+	#schedule {
+	 float:left; 
+	 clear: left;
+    }
   </style>
   <script src="./js/jquery.min.js"></script>
   <script src="./js/client.js"></script>
+  <script src="./js/bootstrap.min.js"></script>
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
  
 <form>
-
 <div id= "title">
-<h1> Relay Controller</h1> </div>
+<h1> Relay Controller</h1> 
 
+<div style="float:top;">
 <div id = "labels" > <p>
  Relay ID: <br>
  Mode: <br>
@@ -41,11 +49,13 @@
  &nbsp <br>
  &nbsp <br>
  &nbsp <br>
+ &nbsp <br>
  &nbsp
- <textarea id="output"></textarea>
+ <textarea hidden id="output"></textarea>
 </p>
-
  </div>
+ 
+ 
 
 <div id ="entry"> <p>
 <select id="ID">
@@ -65,11 +75,21 @@
 </select>
 <input type="time" name="usr_time" id="clock" step="1" value="00:00:00">
 
-<input id="buttonUpdate" onclick="update()" type="button" value="Update Schedule" />
-<input id="buttonDelete" onclick="removeSched()" type="button" value="Delete Current Selection" />
-<input id="buttonSend" onclick="send()" type="button" value="Send Schedule" />
-<input id="buttonLoad" onclick="load()" type="button" value="Load Schedule From Server" />
+<input id="buttonUpdate" class="btn btn-primary" onclick="update()" type="button" value="Update Schedule" />
+<!input id="buttonDelete" class="btn btn-primary" onclick="deleteSched()" type="button" value="Delete Current Selection" />
+<input id="buttonSend" class="btn btn-primary" onclick="send()" type="button" value="Send Schedule to Server" />
+<input id="buttonLoad" class="btn btn-primary" onclick="load()" type="button" value="Load Schedule From Server" />
+ </div>
 </p> </div>
+<div id="schedule">
+<div>
+ <div id="Relay0" style="float:left; width:200px"><b>Relay 1<br></div>
+ <div id="Relay1" style="float:left; width:200px"><b>Relay 2<br></div>
+ <div  id="Relay2" style="float:left;width:200px"><b>Relay 3<br></div>
+ <div id="Relay3" style="float:left;width:200px"><b>Relay 4<br></div>
+  </div>
+  </div>
+</div>
 
 </body>
 </html>
